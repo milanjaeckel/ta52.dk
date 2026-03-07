@@ -1,3 +1,15 @@
+// invert favicon colors
+fetch('house.svg')
+    .then(response => response.text())
+    .then(svgContent => {
+        // add invert filter to the SVG
+        const invertedSvg = svgContent.replace('<svg', '<svg style="filter: invert(1)"');
+        const dataUri = 'data:image/svg+xml;base64,' + btoa(invertedSvg);
+        const link = document.querySelector('link[rel="icon"]');
+        link.href = dataUri;
+    })
+    .catch(err => console.log('Could not invert favicon:', err));
+
 // parallax effect removed per user request (background is static)
 
 
