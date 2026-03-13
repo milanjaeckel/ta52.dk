@@ -20,7 +20,7 @@ html, body {
     height: calc(100% + 10px);
     background: url('bg.jpg') no-repeat center/cover;
     /* fallback color gradient */
-    background-color: #1e3c72;
+    background-color: #000000;
     filter: blur(4px);
 }
 
