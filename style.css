@@ -9,7 +9,7 @@ html, body {
     height: 100%;
     overflow: hidden; /* keep single-screen behavior */
     font-family: 'Courier New', monospace;
-    background: #0d0d0f;
+    background: #0a0a0d;
 }
 
 /* parallax dot background with multiple layers */
@@ -20,12 +20,12 @@ html, body {
     width: 100%;
     height: 100%;
     z-index: 1;
-    background-color: #0d0d0f;
+    background-color: #0a0a0d;
     background-image:
-        radial-gradient(circle, rgba(167, 139, 250, 0.18) 2px, transparent 2px),
-        radial-gradient(circle, rgba(139, 92, 246, 0.15) 2.5px, transparent 2.5px),
-        radial-gradient(circle, rgba(124, 58, 255, 0.12) 2px, transparent 2px),
-        radial-gradient(circle, rgba(168, 85, 247, 0.1) 3px, transparent 3px);
+        radial-gradient(circle, rgba(168, 85, 247, 0.5) 3px, transparent 3px),
+        radial-gradient(circle, rgba(139, 92, 246, 0.45) 3.5px, transparent 3.5px),
+        radial-gradient(circle, rgba(79, 172, 254, 0.4) 3px, transparent 3px),
+        radial-gradient(circle, rgba(236, 72, 153, 0.35) 4px, transparent 4px);
     background-size:
         100px 100px,
         150px 150px,
@@ -87,7 +87,7 @@ html, body {
 .content h1 {
     font-size: 3rem;
     margin-bottom: 0.5rem;
-    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 0 20px rgba(168, 85, 247, 0.4), 0 0 10px rgba(0, 0, 0, 0.5);
     color: #f5f5f5;
     letter-spacing: 2px;
 }
@@ -102,21 +102,22 @@ html, body {
 .links a {
     display: inline-block;
     padding: 1rem 2rem;
-    background: rgba(100, 90, 140, 0.12);
+    background: rgba(100, 90, 140, 0.15);
     color: #f5f5f5;
     text-decoration: none;
     border-radius: 12px;
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
-    border: 1px solid rgba(130, 110, 170, 0.3);
-    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-    transition: background 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+    border: 1px solid rgba(168, 85, 247, 0.5);
+    box-shadow: 0 4px 15px rgba(168, 85, 247, 0.15), 0 0 20px rgba(79, 172, 254, 0.1);
+    transition: background 0.3s ease, transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .links a:hover {
-    background: rgba(120, 100, 160, 0.18);
-    border-color: rgba(150, 130, 190, 0.5);
+    background: rgba(120, 100, 160, 0.25);
+    border-color: rgba(168, 85, 247, 0.8);
     transform: translateY(-3px);
+    box-shadow: 0 6px 25px rgba(168, 85, 247, 0.3), 0 0 30px rgba(79, 172, 254, 0.2);
 }
 
 /* larger screens get a row layout */
@@ -143,28 +144,31 @@ html, body {
 }
 
 .countdown-box {
-    background: rgba(26, 26, 31, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(26, 26, 31, 0.8);
+    border: 1px solid rgba(168, 85, 247, 0.4);
     border-radius: 10px;
     padding: 1rem 1.5rem;
     min-width: 80px;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(168, 85, 247, 0.12), inset 0 1px 0 rgba(168, 85, 247, 0.15);
 }
 
 .countdown-value {
     font-size: 2rem;
     font-weight: bold;
-    color: #f5f5f5;
+    color: #4facfe;
     line-height: 1;
+    text-shadow: 0 0 10px rgba(79, 172, 254, 0.4);
 }
 
 .countdown-label {
     font-size: 0.75rem;
-    color: #b8a0d9;
+    color: #a78bfa;
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-top: 0.5rem;
+    text-shadow: 0 0 8px rgba(167, 139, 250, 0.3);
 }
 
 .countdown-message {
@@ -186,17 +190,18 @@ input:focus, button:focus, a:focus {
 
 .search input {
     padding: 0.5rem 1rem;
-    border: 1px solid rgba(130, 110, 170, 0.3);
+    border: 1px solid rgba(168, 85, 247, 0.5);
     border-radius: 8px;
     width: 200px;
     outline: none;
-    background: rgba(100, 90, 140, 0.12);
+    background: rgba(100, 90, 140, 0.15);
     color: #f5f5f5;
     font-size: 0.95rem;
     font-family: 'Courier New', monospace;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    transition: background 0.3s ease, border-color 0.3s ease;
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 15px rgba(79, 172, 254, 0.1);
 }
 
 .search input::placeholder {
@@ -204,24 +209,28 @@ input:focus, button:focus, a:focus {
 }
 
 .search input:focus {
-    background: rgba(120, 100, 160, 0.18);
-    border-color: rgba(150, 130, 190, 0.5);
+    background: rgba(120, 100, 160, 0.2);
+    border-color: rgba(168, 85, 247, 0.8);
+    box-shadow: 0 0 25px rgba(79, 172, 254, 0.2), 0 0 15px rgba(168, 85, 247, 0.2);
 }
 
 .search button {
     padding: 0.5rem 1rem;
-    border: 1px solid rgba(130, 110, 170, 0.3);
+    border: 1px solid rgba(168, 85, 247, 0.5);
     border-radius: 8px;
-    background: rgba(100, 90, 140, 0.12);
-    color: #f5f5f5;
+    background: rgba(100, 90, 140, 0.15);
+    color: #4facfe;
     font-family: 'Courier New', monospace;
     font-size: 0.95rem;
+    font-weight: bold;
     cursor: pointer;
-    transition: background 0.3s ease, border-color 0.3s ease;
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     outline: none;
+    box-shadow: 0 0 15px rgba(79, 172, 254, 0.1);
 }
 
 .search button:hover {
-    background: rgba(120, 100, 160, 0.18);
-    border-color: rgba(150, 130, 190, 0.5);
+    background: rgba(120, 100, 160, 0.22);
+    border-color: rgba(168, 85, 247, 0.8);
+    box-shadow: 0 0 25px rgba(79, 172, 254, 0.25), 0 0 15px rgba(168, 85, 247, 0.15);
 }
