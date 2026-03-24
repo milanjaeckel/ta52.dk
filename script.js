@@ -84,6 +84,109 @@ function updateCountdown() {
 setInterval(updateCountdown, 1000);
 updateCountdown();
 
+// weather widget: Værløse, Copenhagen, Denmark (detailed)
+const weatherLat = 55.7833;
+const weatherLon = 12.3833;
+
+const weatherCodeMap = {
+    0: {desc: 'Clear', emoji: '☀️'},
+    1: {desc: 'Mainly clear', emoji: '🌤️'},
+    2: {desc: 'Partly cloudy', emoji: '⛅'},
+    3: {desc: 'Overcast', emoji: '☁️'},
+    45: {desc: 'Fog', emoji: '🌫️'},
+    48: {desc: 'Depositing rime fog', emoji: '🌫️'},
+    51: {desc: 'Light drizzle', emoji: '🌦️'},
+    53: {desc: 'Moderate drizzle', emoji: '🌧️'},
+    55: {desc: 'Dense drizzle', emoji: '🌧️'},
+    61: {desc: 'Slight rain', emoji: '🌦️'},
+    63: {desc: 'Moderate rain', emoji: '🌧️'},
+    65: {desc: 'Heavy rain', emoji: '⛈️'},
+    71: {desc: 'Slight snow', emoji: '🌨️'},
+    73: {desc: 'Moderate snow', emoji: '🌨️'},
+    75: {desc: 'Heavy snow', emoji: '❄️'},
+    80: {desc: 'Rain showers', emoji: '🌧️'},
+    81: {desc: 'Heavy showers', emoji: '⛈️'},
+    95: {desc: 'Thunderstorm', emoji: '⛈️'}
+};
+
+function mapWeatherCode(code) {
+    return weatherCodeMap[code] || {desc: 'Unknown', emoji: '🌈'};
+}
+
+function degToCompass(num) {
+    const val = Math.floor((num / 22.5) + 0.5);
+    const arr = ["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"];
+    return arr[(val % 16)];
+}
+
+async function fetchWeather() {
+    try {
+        const url = `https://api.open-meteo.com/v1/forecast?latitude=${weatherLat}&longitude=${weatherLon}&current_weather=true&hourly=relativehumidity_2m,windspeed_10m,winddirection_10m&daily=sunrise,sunset&timezone=Europe%2FCopenhagen`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('Weather fetch failed');
+        const data = await res.json();
+        const cw = data.current_weather;
+        if (!cw) throw new Error('No current weather data');
+
+        const tempEl = document.getElementById('weatherTemp');
+        const descEl = document.getElementById('weatherDesc');
+        const iconEl = document.getElementById('weatherIcon');
+        const windEl = document.getElementById('weatherWind');
+        const windDirEl = document.getElementById('weatherWindDir');
+        const humidityEl = document.getElementById('weatherHumidity');
+        const sunriseEl = document.getElementById('weatherSunrise');
+        const sunsetEl = document.getElementById('weatherSunset');
+        const updatedEl = document.getElementById('weatherUpdated');
+
+        const code = cw.weathercode;
+        const mapped = mapWeatherCode(code);
+
+        // find index for current time in hourly arrays (use nearest if exact match not found)
+        let idx = -1;
+        if (data.hourly && data.hourly.time) {
+            idx = data.hourly.time.indexOf(cw.time);
+            if (idx === -1) {
+                const cwMs = new Date(cw.time).getTime();
+                let minDiff = Infinity;
+                let nearest = -1;
+                data.hourly.time.forEach((t, i) => {
+                    const d = Math.abs(new Date(t).getTime() - cwMs);
+                    if (d < minDiff) { minDiff = d; nearest = i; }
+                });
+                idx = nearest;
+            }
+        }
+
+        if (tempEl) tempEl.textContent = `${Math.round(cw.temperature)}°C`;
+        if (descEl) descEl.textContent = mapped.desc;
+        if (iconEl) iconEl.textContent = mapped.emoji;
+        if (windEl) windEl.textContent = `${cw.windspeed} m/s`;
+        if (windDirEl) windDirEl.textContent = cw.winddirection ? `${degToCompass(cw.winddirection)} (${Math.round(cw.winddirection)}°)` : '--';
+
+        if (idx !== -1 && data.hourly.relativehumidity_2m) {
+            const hum = data.hourly.relativehumidity_2m[idx];
+            if (humidityEl) humidityEl.textContent = `${hum}%`;
+        }
+
+        if (data.daily && data.daily.sunrise && data.daily.sunrise[0]) {
+            if (sunriseEl) sunriseEl.textContent = new Date(data.daily.sunrise[0]).toLocaleTimeString('da-DK', {timeZone: 'Europe/Copenhagen', hour: '2-digit', minute: '2-digit'});
+        }
+        if (data.daily && data.daily.sunset && data.daily.sunset[0]) {
+            if (sunsetEl) sunsetEl.textContent = new Date(data.daily.sunset[0]).toLocaleTimeString('da-DK', {timeZone: 'Europe/Copenhagen', hour: '2-digit', minute: '2-digit'});
+        }
+
+        if (updatedEl) updatedEl.textContent = new Date(cw.time).toLocaleTimeString('da-DK', {timeZone: 'Europe/Copenhagen', hour: '2-digit', minute: '2-digit'});
+    } catch (err) {
+        const descEl = document.getElementById('weatherDesc');
+        if (descEl) descEl.textContent = 'Weather unavailable';
+        console.log('Weather error:', err);
+    }
+}
+
+// refresh weather every 10 minutes
+fetchWeather();
+setInterval(fetchWeather, 10 * 60 * 1000);
+
 // google search
 const searchInput = document.getElementById('googleSearch');
 const searchBtn = document.getElementById('searchBtn');

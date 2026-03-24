@@ -15,6 +15,7 @@
     <div class="content">
         <h1>Ta52 Services</h1>
         <div id="clock"></div>
+        <!-- weather widget moved to bottom for cleaner layout -->
         <div class="search">
             <input type="text" id="googleSearch" placeholder="Search Google...">
             <button id="searchBtn">Go</button>
@@ -43,6 +44,26 @@
             </div>
         </div>
         <div id="countdownMessage" class="countdown-message" style="display: none;"></div>
+    </div>
+    <!-- bottom weather widget -->
+    <div class="weather bottom">
+        <div id="weatherWidget" class="weather-widget">
+            <div class="weather-main">
+                <div id="weatherIcon" class="weather-icon">☀️</div>
+                <div class="weather-text">
+                    <div id="weatherTemp" class="weather-temp">--°C</div>
+                    <div id="weatherDesc" class="weather-desc">Loading weather...</div>
+                </div>
+            </div>
+            <div class="weather-grid">
+                <div>Wind: <span id="weatherWind">-- m/s</span></div>
+                <div>Dir: <span id="weatherWindDir">--</span></div>
+                <div>Humidity: <span id="weatherHumidity">--%</span></div>
+                <div>Sunrise: <span id="weatherSunrise">--:--</span></div>
+                <div>Sunset: <span id="weatherSunset">--:--</span></div>
+                <div>Updated: <span id="weatherUpdated">--</span></div>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
