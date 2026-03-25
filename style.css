@@ -352,7 +352,7 @@ html, body {
     .weather-updated { align-items: flex-start; margin-left: 0; margin-top: 0.35rem; }
     .weather-grid { flex-wrap: wrap; justify-content: center; margin-top: 0.4rem; }
     .weather-grid > div { min-width: 120px; }
-    .weather.bottom { left: 12px; right: 12px; bottom: 12px; }
+    .weather.bottom { display: none; }
 }
 
 /* remove focus outlines globally */
