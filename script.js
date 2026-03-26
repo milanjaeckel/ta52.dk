@@ -48,11 +48,7 @@ setInterval(updateClock, 1000);
 updateClock();
 
 // countdown timer to March 27, 2026 (Copenhagen timezone)
-<<<<<<< HEAD
 const targetDate = new Date('2026-03-27T14:00:00').toLocaleString('en-US', { timeZone: 'Europe/Copenhagen' });
-=======
-const targetDate = new Date('2026-03-28T00:00:00').toLocaleString('en-US', { timeZone: 'Europe/Copenhagen' });
->>>>>>> 595d0f72c68c7c9a176cf86aef53e56b3e09b5c2
 const targetTime = new Date(targetDate).getTime();
 
 function updateCountdown() {
