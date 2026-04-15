@@ -1,37 +1,33 @@
-// invert favicon colors
+// favicon styling for light theme
 fetch('house.svg')
     .then(response => response.text())
     .then(svgContent => {
-        // add invert filter to the SVG
-        const invertedSvg = svgContent.replace('<svg', '<svg style="filter: invert(1)"');
-        const dataUri = 'data:image/svg+xml;base64,' + btoa(invertedSvg);
+        // no filter needed for light theme
+        const dataUri = 'data:image/svg+xml;base64,' + btoa(svgContent);
         const link = document.querySelector('link[rel="icon"]');
         link.href = dataUri;
     })
-    .catch(err => console.log('Could not invert favicon:', err));
+    .catch(err => console.log('Could not set favicon:', err));
 
-// parallax background effect on mousemove
+// subtle floral background animation on mousemove
 const bgEl = document.querySelector('.bg');
-const parallaxLayers = [20, 50, 90, 130]; // different speeds for each layer
 
 document.addEventListener('mousemove', (e) => {
     const x = (e.clientX / window.innerWidth) * 100;
     const y = (e.clientY / window.innerHeight) * 100;
     
-    const bgPositions = parallaxLayers.map(speed => {
-        return `${x * speed / 100}px ${y * speed / 100}px`;
-    }).join(', ');
-    
-    bgEl.style.backgroundPosition = bgPositions;
-    bgEl.style.animation = 'none'; // stop idle animation when moving
+    // subtle opacity and positioning shift based on position
+    const intensity = 0.5 + (Math.sin(x + y) * 0.08);
+    bgEl.style.opacity = (0.95 + intensity * 0.05).toString();
+    bgEl.style.animation = 'none';
 });
 
-// resume idle animation after mouse stops
+// resume subtle animation after mouse stops
 let parallaxTimeout;
 document.addEventListener('mousemove', () => {
     clearTimeout(parallaxTimeout);
     parallaxTimeout = setTimeout(() => {
-        bgEl.style.animation = 'idleParallax 20s ease-in-out infinite';
+        bgEl.style.animation = 'subtleFloral 30s ease-in-out infinite';
     }, 1000);
 });
 
